@@ -1,0 +1,37 @@
+header {
+  display: flex;
+  padding: 3.2rem 14rem;
+  gap: 6.4rem;
+  .logo {
+    max-width: 100%;
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 3.2rem 3rem;
+    .logo {
+      width: 72px;
+      height: 40px;
+    }
+  }
+  > form {
+    display: flex;
+    width: 100%;
+    align-self: center;
+  }
+  > form > fieldset {
+    display: flex;
+    width: 100%;
+    padding: 1.6rem;
+    height: 6.4rem;
+    border-radius: 0.8rem;
+    gap: 1.6rem;
+    background: #f6f6f6;
+    border: none;
+  }
+  form > fieldset > input {
+    outline: none;
+    background: none;
+    border: none;
+    width: 100%;
+    font-size: 2rem;
+  }
+}

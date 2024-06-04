@@ -1,0 +1,14 @@
+.button {
+  font-size: 1.6rem;
+  padding: 1rem 2rem;
+  background: #6d6d6d;
+  color: #f6f6f6;
+  border-radius: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+
+  &.active {
+    background: #114477;
+    color: #f1f7fe;
+  }
+}

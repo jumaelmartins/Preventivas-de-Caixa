@@ -1,0 +1,75 @@
+.container {
+  display: flex;
+  padding: 6.4rem 14rem;
+  flex-direction: column;
+  gap: 3.2rem;
+  @media screen and (max-width: 1024px) {
+    padding: 6.4rem 3rem;
+  }
+}
+h2 {
+  font-size: 2.4rem;
+  color: #1a1a1a;
+}
+
+.chart-container {
+  display: flex;
+  background: #efefef;
+  padding: 1.6rem;
+  border-radius: 0.8rem;
+}
+
+.chart-container-line {
+  width: 100%;
+  h2 {
+    font-size: 2rem;
+  }
+  text-align: center;
+}
+.chart-container-bar {
+  width: 100%;
+  h2 {
+    font-size: 2rem;
+  }
+  text-align: center;
+}
+
+.dashboard-container {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-areas:
+    "resumo ranking  filtro"
+    "line line line ";
+  > :nth-child(1) {
+    grid-area: resumo;
+  }
+  > :nth-child(2) {
+    grid-area: ranking;
+    height: 22rem;
+    columns: 3/4;
+  }
+  > :nth-child(3) {
+    grid-area: filtro;
+    border-radius: .8rem;
+    padding: 1.6rem;
+    background: #efefef;
+    > fieldset {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        > h2 {
+            font-size: 2rem;
+        }
+        > input, select {
+            padding: 1rem;
+            border-radius: .8rem;
+            outline: none;
+            border: none;
+        }
+    }
+  }
+  > :nth-child(4) {
+    grid-area: line;
+  }
+}

@@ -1,0 +1,83 @@
+.prev-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  li {
+    border-bottom: 1px solid #efefef;
+    display: flex;
+    @media screen and (max-width: 1225px) {
+      flex-direction: column;
+      padding: 1.2rem 3.2rem;
+    }
+    justify-content: space-between;
+    padding: 1.2rem 0 1.2rem 3.2rem;
+    > :nth-child(1) {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      @media screen and (max-width: 768px) {
+        flex-direction: row;
+      }
+      gap: 0.8rem;
+      p {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #5d5d5d;
+      }
+      p > span {
+        font-weight: normal;
+        color: #454545;
+      }
+    }
+    > :nth-child(1)::before {
+      position: absolute;
+      content: "";
+      height: 0.3rem;
+      width: 1rem;
+      background: #114477;
+      top: 0;
+      left: -3.2rem;
+    }
+    > :nth-child(2) {
+      display: flex;
+      gap: 1.6rem;
+      @media screen and (max-width: 768px) {
+        margin-top: 1.6rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    > :nth-child(2) > div {
+      display: flex;
+      gap: 0.8rem;
+      flex-direction: column;
+      text-align: center;
+      background: #efefef;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+     
+      > span {
+        background: #efefef;
+        padding: 1.6rem;
+        border-radius: 0.8rem;
+        font-size: 1.4rem;
+        letter-spacing: 0.25rem;
+        font-weight: bold;
+        border: 1px solid #114477;
+      }
+      > div {
+        border: 1px solid #114477;
+        padding: 0.8rem;
+        border-radius: 0.8rem;
+        display: flex;
+        gap: 0.8rem;
+      
+      }
+      > div > iframe {
+        border-radius: 0.8rem;
+      }
+    }
+  }
+}
