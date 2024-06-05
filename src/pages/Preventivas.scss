@@ -57,7 +57,7 @@
       background: #efefef;
       padding: 0.8rem;
       border-radius: 0.8rem;
-     
+
       > span {
         background: #efefef;
         padding: 1.6rem;
@@ -73,11 +73,25 @@
         border-radius: 0.8rem;
         display: flex;
         gap: 0.8rem;
-      
       }
       > div > iframe {
         border-radius: 0.8rem;
       }
     }
   }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f3f3;
+  color: #333;
+  font-size: 16px;
+  margin: 5px;
+  border: 1px solid #ccc;
+}
+
+.display-none {
+  display: none;
 }

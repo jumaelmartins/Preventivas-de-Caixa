@@ -39,48 +39,46 @@ const Resumo = () => {
           <Button to={"/"}>Resumo</Button>
           <Button to={"/preventivas"}>Preventivas</Button>
         </Nav>
-        <div className="dashboard-container">
-          <Card value={totalManutencoes} title={"Total de Preventivas"} />
-          {loading
-            ? "Carregando ..."
-            : manutencoesPorSupervisor && (
-                <div className="chart-container">
-                  <BarChart
-                    title={"Preventivas Por Supervisor"}
-                    categories={Object.keys(manutencoesPorSupervisor)}
-                    data={Object.values(manutencoesPorSupervisor)}
-                  />
-                </div>
-              )}
-          {loading ? (
-            "carregando ..."
-          ) : (
-            <form>
-              <fieldset>
-                <h2>Filtrar pro mês</h2>
-                <input type="month" id="monthFilter"></input>
-              </fieldset>
-              <fieldset>
-                <h2>Filtrar por supervisor</h2>
-                <select>
-                  <option value="">Select</option>
-                </select>
-              </fieldset>
-            </form>
-          )}
+        {loading ? (
+          <div className="loading-component">Carregando ...</div>
+        ) : (
+          <div className="dashboard-container">
+            <Card value={totalManutencoes} title={"Total de Preventivas"} />
+            {manutencoesPorSupervisor && (
+              <div className={"chart-container"}>
+                <BarChart
+                  title={"Preventivas Por Supervisor"}
+                  categories={Object.keys(manutencoesPorSupervisor)}
+                  data={Object.values(manutencoesPorSupervisor)}
+                />
+              </div>
+            )}
+            {
+              <form>
+                <fieldset>
+                  <h2>Filtrar pro mês</h2>
+                  <input type="month" id="monthFilter"></input>
+                </fieldset>
+                <fieldset>
+                  <h2>Filtrar por supervisor</h2>
+                  <select>
+                    <option value="">Select</option>
+                  </select>
+                </fieldset>
+              </form>
+            }
 
-          {loading
-            ? "Carregando ..."
-            : manutencoesPorData && (
-                <div className="chart-container">
-                  <LineChart
-                    title={"Preventivas Por Dia"}
-                    categories={Object.keys(manutencoesPorData)}
-                    data={Object.values(manutencoesPorData)}
-                  />
-                </div>
-              )}
-        </div>
+            {manutencoesPorData && (
+              <div className="chart-container">
+                <LineChart
+                  title={"Preventivas Por Dia"}
+                  categories={Object.keys(manutencoesPorData)}
+                  data={Object.values(manutencoesPorData)}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </section>
     </>
   );

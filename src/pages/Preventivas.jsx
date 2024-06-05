@@ -7,6 +7,7 @@ import "./Preventivas.scss";
 const Preventivas = () => {
   const { request, loading } = useFetch();
   const [prevs, setPrevs] = React.useState(null);
+  const [iframeLoad, setIframeLoad] = React.useState(true);
   const baseUrl = "https://drive.google.com/file/d/";
 
   const url =
@@ -21,6 +22,10 @@ const Preventivas = () => {
     getData();
   }, []);
 
+  const handleLoad = () => {
+    setIframeLoad(false);
+    console.log("ok");
+  };
   return (
     <section className="container">
       <h2>Preventivas de Caixas - BA:</h2>
@@ -51,15 +56,22 @@ const Preventivas = () => {
                   <div>
                     <span>Antes</span>
                     <div>
+                      {/* <div class={iframeLoad ? "loading" : "display-none"}>
+                        Carregando...
+                      </div> */}
                       {prev["Foto - Antes"].map((url, index) => {
                         const id = url.match(/id=([^&]+)/)[1];
                         return (
-                          <iframe
-                            key={index}
-                            src={baseUrl + id + "/preview"}
-                            width={"160"}
-                            height={"180"}
-                          ></iframe>
+                          <>
+                            <iframe
+                              // className={iframeLoad ? "display-none" : ""}
+                              // onLoad={handleLoad}
+                              key={index}
+                              src={baseUrl + id + "/preview"}
+                              width={"160"}
+                              height={"180"}
+                            ></iframe>
+                          </>
                         );
                       })}
                     </div>
@@ -67,15 +79,22 @@ const Preventivas = () => {
                   <div>
                     <span>Depois</span>
                     <div>
+                      {/* <div class={iframeLoad ? "loading" : "display-none"}>
+                        Carregando...
+                      </div> */}
                       {prev["Foto - Depois"].map((url, index) => {
                         const id = url.match(/id=([^&]+)/)[1];
                         return (
-                          <iframe
-                            key={index}
-                            src={baseUrl + id + "/preview"}
-                            width={"160"}
-                            height={"180"}
-                          ></iframe>
+                          <>
+                            <iframe
+                              // className={iframeLoad ? "display-none" : ""}
+                              // onLoad={handleLoad}
+                              key={index}
+                              src={baseUrl + id + "/preview"}
+                              width={"160"}
+                              height={"180"}
+                            ></iframe>
+                          </>
                         );
                       })}
                     </div>
