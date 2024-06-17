@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import Resumo from "./pages/Resumo";
 import Preventivas from "./pages/Preventivas";
 import "./styles/main.scss";
-
 function App() {
   return (
     <Routes>

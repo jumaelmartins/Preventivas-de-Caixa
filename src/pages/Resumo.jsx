@@ -10,12 +10,12 @@ import BarChart from "../components/barChart/BarChart";
 
 const Resumo = () => {
   const { request, loading } = useFetch();
-
+  const [data, setData] = React.useState(null);
   const [totalManutencoes, setTotalManutencoes] = React.useState(null);
   const [manutencoesPorSupervisor, setManutencoesPorSupervisor] =
     React.useState(null);
   const [manutencoesPorData, setManutencoesPorData] = React.useState(null);
-
+  const [supervisores, setSupervisores] = React.useState(null);
   const url =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlllr7_81xa2FAcKRdqYWRUUWGiwAG4UvPDqrbqsKBzbT6k57u9s6Bq8XeTeEOSa6ThfFu3p5dtExL/pub?output=csv";
 
@@ -24,12 +24,32 @@ const Resumo = () => {
       const { json } = await request(url);
       const { totalManutencoes, manutencoesPorSupervisor, manutencoesPorData } =
         generateResumo(json);
+      setData(json);
       setTotalManutencoes(totalManutencoes);
       setManutencoesPorData(manutencoesPorData);
       setManutencoesPorSupervisor(manutencoesPorSupervisor);
+      setSupervisores(Object.keys(manutencoesPorSupervisor));
     };
     getData();
   }, []);
+
+  const handleChange = ({ target }) => {
+    const filteredData = data.filter((data) => data.Supervisor == target.value);
+    if (target.value !== "Selecione") {
+      const { totalManutencoes, manutencoesPorSupervisor, manutencoesPorData } =
+        generateResumo(filteredData);
+      setTotalManutencoes(totalManutencoes);
+      setManutencoesPorData(manutencoesPorData);
+      setManutencoesPorSupervisor(manutencoesPorSupervisor);
+    }
+    if (target.value === "Selecione") {
+      const { totalManutencoes, manutencoesPorSupervisor, manutencoesPorData } =
+        generateResumo(data);
+      setTotalManutencoes(totalManutencoes);
+      setManutencoesPorData(manutencoesPorData);
+      setManutencoesPorSupervisor(manutencoesPorSupervisor);
+    }
+  };
 
   return (
     <>
@@ -61,8 +81,16 @@ const Resumo = () => {
                 </fieldset>
                 <fieldset>
                   <h2>Filtrar por supervisor</h2>
-                  <select>
-                    <option value="">Select</option>
+                  <select name="supervisor" onChange={handleChange}>
+                    <option>Selecione</option>
+                    {supervisores &&
+                      supervisores.map((sup) => {
+                        return (
+                          <option key={sup} value={sup}>
+                            {sup}
+                          </option>
+                        );
+                      })}
                   </select>
                 </fieldset>
               </form>
