@@ -13,7 +13,9 @@ const Resumo = () => {
   const { request, loading } = useFetch();
   const [data, setData] = React.useState(null);
   const [totalManutencoes, setTotalManutencoes] = React.useState(null);
-  const [month, setMonth] = React.useState(null);
+  const [month, setMonth] = React.useState(
+    new Date().toISOString().slice(0, 7)
+  ); // Formato yyyy-MM
   const [manutencoesPorSupervisor, setManutencoesPorSupervisor] =
     React.useState(null);
   const [manutencoesPorData, setManutencoesPorData] = React.useState(null);
@@ -22,26 +24,31 @@ const Resumo = () => {
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlllr7_81xa2FAcKRdqYWRUUWGiwAG4UvPDqrbqsKBzbT6k57u9s6Bq8XeTeEOSa6ThfFu3p5dtExL/pub?output=csv";
 
   React.useEffect(() => {
-    const mes = getDate();
-    // const string = "20/12/2024";
-    setMonth(mes);
-    // console.log(string.slice(-7).replace("/", "-"));
-
     const getData = async () => {
       const { json } = await request(url);
 
+      // Filtrar dados pelo mês atual
+      const filteredData = json.filter((item) => {
+        const [day, nmonth, year] = item["Data Execução"].split("/");
+
+        // Converte a data no formato yyyy-MM
+        const dataExecucao = `${year}-${nmonth.padStart(2, "0")}`;
+        return dataExecucao === month;
+      });
+
       setData(json);
       const { totalManutencoes, manutencoesPorSupervisor, manutencoesPorData } =
-        generateResumo(json);
+        generateResumo(filteredData); // Use os dados filtrados
       setTotalManutencoes(totalManutencoes);
       setManutencoesPorData(manutencoesPorData);
       setManutencoesPorSupervisor(manutencoesPorSupervisor);
       setSupervisores(Object.keys(manutencoesPorSupervisor));
     };
-    getData();
-  }, []);
 
-  const handleChange = ({ target }) => {
+    getData();
+  }, [month, request]); // Adiciona month como dependência
+
+  const handleSupervisorChange = ({ target }) => {
     const filteredData = data.filter((data) => data.Supervisor == target.value);
     if (target.value !== "Selecione") {
       const { totalManutencoes, manutencoesPorSupervisor, manutencoesPorData } =
@@ -57,6 +64,10 @@ const Resumo = () => {
       setManutencoesPorData(manutencoesPorData);
       setManutencoesPorSupervisor(manutencoesPorSupervisor);
     }
+  };
+
+  const handleMonthChange = ({ target }) => {
+    setMonth(target.value); // Atualiza o estado do mês
   };
 
   return (
@@ -84,12 +95,13 @@ const Resumo = () => {
             {
               <form>
                 <fieldset>
-                  <h2>Filtrar pro mês</h2>
+                  <h2>Filtrar por mês</h2>
                   <input
                     className="month"
-                    onChange={({ target }) => console.log(target.value)}
+                    onChange={handleMonthChange}
                     type="month"
                     id="monthFilter"
+                    value={month} // Define o valor inicial como o mês atual
                   ></input>
                 </fieldset>
                 <fieldset>
@@ -97,7 +109,7 @@ const Resumo = () => {
                   <select
                     className="supervisor"
                     name="supervisor"
-                    onChange={handleChange}
+                    onChange={handleSupervisorChange}
                   >
                     <option>Selecione</option>
                     {supervisores &&

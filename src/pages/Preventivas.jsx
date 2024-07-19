@@ -30,12 +30,24 @@ const Preventivas = () => {
 
   React.useEffect(() => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    const filtered = prevs.filter(
-      (prev) =>
-        prev.Caixa.toLowerCase().includes(lowerCaseSearchTerm) ||
-        prev["Data Execução"].toLowerCase().includes(lowerCaseSearchTerm) ||
-        prev.Supervisor.toLowerCase().includes(lowerCaseSearchTerm)
-    );
+    const filtered = prevs
+      .filter(
+        (prev) =>
+          prev.Caixa.toLowerCase().includes(lowerCaseSearchTerm) ||
+          prev["Data Execução"].toLowerCase().includes(lowerCaseSearchTerm) ||
+          prev.Supervisor.toLowerCase().includes(lowerCaseSearchTerm)
+      )
+      .sort((a, b) => {
+        // Converta as datas para objetos Date para comparar corretamente
+        const dateA = new Date(
+          a["Data Execução"].split("/").reverse().join("-")
+        );
+        const dateB = new Date(
+          b["Data Execução"].split("/").reverse().join("-")
+        );
+        return dateB - dateA; // Ordem decrescente
+      });
+
     setFilteredPrevs(filtered);
     setCurrentPage(1); // Reseta a página atual para 1 ao filtrar
   }, [searchTerm, prevs]);
