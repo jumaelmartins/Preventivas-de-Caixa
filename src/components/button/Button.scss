@@ -5,10 +5,21 @@
   color: #f6f6f6;
   border-radius: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: .1rem;
-
+  letter-spacing: 0.1rem;
+  transition: all 0.1s;
+  position: relative;
+  
   &.active {
     background: #114477;
     color: #f1f7fe;
   }
+}
+
+.button:hover {
+  box-shadow: 1px 1px 1px 1px lightgray;
+  transform: translate(2px, 2px);
+}
+
+.button:active {
+  box-shadow: 0 0 0 0;
 }

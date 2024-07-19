@@ -35,6 +35,20 @@ h2 {
 }
 
 .dashboard-container {
+  @media screen and (max-width: 1024px) {
+    grid-template-areas:
+      "filtro filtro"
+      "resumo ranking"
+      "line line";
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-areas:
+      "filtro "
+      "resumo "
+      "ranking"
+      "line ";
+  }
   display: grid;
   gap: 1.6rem;
   grid-template-areas:
@@ -50,23 +64,24 @@ h2 {
   }
   > :nth-child(3) {
     grid-area: filtro;
-    border-radius: .8rem;
+    border-radius: 0.8rem;
     padding: 1.6rem;
     background: #efefef;
     > fieldset {
+      border: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      > h2 {
+        font-size: 2rem;
+      }
+      > input,
+      select {
+        padding: 1rem;
+        border-radius: 0.8rem;
+        outline: none;
         border: none;
-        display: flex;
-        flex-direction: column;
-        gap: 1.6rem;
-        > h2 {
-            font-size: 2rem;
-        }
-        > input, select {
-            padding: 1rem;
-            border-radius: .8rem;
-            outline: none;
-            border: none;
-        }
+      }
     }
   }
   > :nth-child(4) {
@@ -75,10 +90,10 @@ h2 {
 }
 
 .loading-component {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }

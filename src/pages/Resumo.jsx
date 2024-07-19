@@ -7,11 +7,13 @@ import generateResumo from "../utils/generateResumo";
 import LineChart from "../components/lineChart/LineChart";
 import Card from "../components/card/Card";
 import BarChart from "../components/barChart/BarChart";
+import { getDate } from "../utils/getDate";
 
 const Resumo = () => {
   const { request, loading } = useFetch();
   const [data, setData] = React.useState(null);
   const [totalManutencoes, setTotalManutencoes] = React.useState(null);
+  const [month, setMonth] = React.useState(null);
   const [manutencoesPorSupervisor, setManutencoesPorSupervisor] =
     React.useState(null);
   const [manutencoesPorData, setManutencoesPorData] = React.useState(null);
@@ -20,11 +22,17 @@ const Resumo = () => {
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlllr7_81xa2FAcKRdqYWRUUWGiwAG4UvPDqrbqsKBzbT6k57u9s6Bq8XeTeEOSa6ThfFu3p5dtExL/pub?output=csv";
 
   React.useEffect(() => {
+    const mes = getDate();
+    // const string = "20/12/2024";
+    setMonth(mes);
+    // console.log(string.slice(-7).replace("/", "-"));
+
     const getData = async () => {
       const { json } = await request(url);
+
+      setData(json);
       const { totalManutencoes, manutencoesPorSupervisor, manutencoesPorData } =
         generateResumo(json);
-      setData(json);
       setTotalManutencoes(totalManutencoes);
       setManutencoesPorData(manutencoesPorData);
       setManutencoesPorSupervisor(manutencoesPorSupervisor);
@@ -77,11 +85,20 @@ const Resumo = () => {
               <form>
                 <fieldset>
                   <h2>Filtrar pro mês</h2>
-                  <input type="month" id="monthFilter"></input>
+                  <input
+                    className="month"
+                    onChange={({ target }) => console.log(target.value)}
+                    type="month"
+                    id="monthFilter"
+                  ></input>
                 </fieldset>
                 <fieldset>
                   <h2>Filtrar por supervisor</h2>
-                  <select name="supervisor" onChange={handleChange}>
+                  <select
+                    className="supervisor"
+                    name="supervisor"
+                    onChange={handleChange}
+                  >
                     <option>Selecione</option>
                     {supervisores &&
                       supervisores.map((sup) => {
